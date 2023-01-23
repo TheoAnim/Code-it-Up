@@ -1,0 +1,15 @@
+#this function basically extracts the non-zero rows of a matrix
+#function takes in a matrix
+row.del.fxn <- function(mat){
+  
+new.mat <- c() #create a matrix to store non zero rows
+
+for (i in 1:nrow(mat)){
+  
+  if (sum(mat[i,])!=0){ #check if row sum is not zero
+    
+    new.mat <- rbind(new.mat, mat[i,]) #then rowbind the non zero row to the new matrix
+  }
+}
+return(new.mat) #print your non-zero matrix
+}
