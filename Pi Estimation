@@ -1,0 +1,46 @@
+#draw random sample from a uniform distribution
+set.seed(10)
+
+#generate a random samples from uniform distribution. These samples lie between 0 and 1
+a <- runif(10000)
+b <- runif(10000)
+
+#form points with the two samples
+pts <- matrix(c(a,b), ncol = 2)
+
+#predefined center
+center <- c(0.5,0.5)
+
+#vector of zeros to store your calculated distance
+dist <- rep(0, nrow(pts))
+
+
+
+for (i in 1:nrow(pts)) {
+  #distance formula
+  d <- sqrt((pts[i,1]-center[1])^2 + (pts[i,2]-center[2])^2)
+  
+  dist[i] <- d
+}
+
+#points and their corresponding distance from center
+pts.dist <- matrix(c(a,b, dist), ncol=3)
+
+#vector to store the position of points within the circle
+pos <- c()
+
+for (i in 1:nrow(pts.dist)){
+  
+  if(pts.dist[i,3]<=0.5) #any point inside the circle has distance from the center to be less than or equal to 0.5
+  {
+    
+  pos <- c(pos, i)
+  
+  }
+}
+
+#ratio of number of points inside the circle to the number of points is an approximation of pi/4
+
+
+#hence our pi estimate is given by
+pi.est <- 4*(length(pos)/nrow(pts))
