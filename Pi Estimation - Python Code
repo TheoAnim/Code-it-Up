@@ -1,0 +1,39 @@
+import random
+import math
+import numpy as np
+
+# draw random sample from a uniform distribution
+random.seed(10)
+
+# generate a random samples from uniform distribution. These samples lie between 0 and 1
+a = np.random.rand(10000)
+b = np.random.rand(10000)
+
+# form points with the two samples
+pts = np.column_stack((a, b))
+
+# predefined center
+center = [0.5, 0.5]
+
+# vector of zeros to store your calculated distance
+dist = np.zeros((pts.shape[0]))
+
+for i in range(pts.shape[0]):
+    # distance formula
+    d = math.sqrt((pts[i, 0] - center[0])**2 + (pts[i, 1] - center[1])**2)
+    dist[i] = d
+
+# points and their corresponding distance from center
+pts_dist = np.column_stack((a, b, dist))
+
+# vector to store the position of points within the circle
+pos = []
+
+for i in range(pts_dist.shape[0]):
+    if pts_dist[i, 2] <= 0.5:  # any point inside the circle has distance from the center to be less than or equal to 0.5
+        pos.append(i)
+
+# ratio of number of points inside the circle to the number of points is an approximation of pi/4
+
+# hence our pi estimate is given by
+pi_est = 4 * (len(pos) / pts.shape[0])
